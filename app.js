@@ -11,26 +11,34 @@ items.forEach(item =>{
     console.log(item);
 }); */
 
-function loginUser(email, passsword, callback) {
-   setTimeout(()=> {
+function loginUser(email, passsword) {
+    return new Promise((resolve,reject) => {
+    setTimeout(()=> {
        console.log("Now we have the data");
-       callback({userEmail: email});
-   }, 3000) 
+       resolve({userEmail: email});
+   }, 3000); 
+    })
+   
 }
 
-function getuserVideos(email, callback) {
- setTimeout(() => {
-     callback(["video1", "video2", "video3"])
- }, 2000)    
-}
-
-function videoDetails(video, callback) {
+function getuserVideos(email) {
+    return new Promise((resolve,reject) => {
     setTimeout(() => {
-        callback("title of the video")
-    }, 2000);
+     resolve(["video1", "video2", "video3"])
+    }, 2000);  
+    })  
+}
+
+function videoDetails(video) {
+    return new Promise((resolve,reject) => {
+       setTimeout(() => {
+        resolve("title of the video")
+    }, 2000); 
+    })
+    
    }
 
-const user = loginUser("gamze@goomail.com", 123456, user => {
+/* const user = loginUser("gamze@goomail.com", 123456, user => {
     console.log(user);
     getuserVideos(user.userEmail, videos => {
         console.log(videos);
@@ -38,7 +46,22 @@ const user = loginUser("gamze@goomail.com", 123456, user => {
             console.log(title);
         });
     });
-});
+}); */
+
+/* loginUser('gamze', 'bumba')
+.then(user => getuserVideos(user.email))
+.then(videos => videoDetails(videos[0]))
+.then(detail => console.log(detail)); */
+
+// //SYNC
+async function displayUser() {
+    const loggedUser = await loginUser("gamze", "12345");
+    const videos = await getuserVideos(loggedUser.userEmail);
+    const detail = await videoDetails(videos[0]);
+    console.log(detail);
+}
+displayUser();
+
 
 
 
