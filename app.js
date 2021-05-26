@@ -55,10 +55,15 @@ function videoDetails(video) {
 
 // //SYNC
 async function displayUser() {
-    const loggedUser = await loginUser("gamze", "12345");
+    try{    
+        const loggedUser = await loginUser("gamze", "12345");
     const videos = await getuserVideos(loggedUser.userEmail);
     const detail = await videoDetails(videos[0]);
-    console.log(detail);
+    console.log(detail);}
+    catch(err){
+        console.log("sorun var");
+    }
+
 }
 displayUser();
 
